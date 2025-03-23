@@ -14,9 +14,9 @@ def print_path(maze, path):
 
 def main():
     maze = Maze()
-    ga = GeneticAlgorithm(maze, population_size=100, chromosome_length=50, mutation_rate=0.05)
+    ga = GeneticAlgorithm(maze, population_size=100, chromosome_length=150, mutation_rate=0.05)
 
-    generations = 100
+    generations = 200  # Aumento de generaciones para un laberinto más grande
     for gen in range(generations):
         ga.create_next_generation()
         best = ga.get_best_agent()

@@ -12,18 +12,24 @@ class Agent:
         x, y = maze.start
         path = [(x, y)]
         for move in self.chromosome:
+            new_x, new_y = x, y
             if move == "up":
-                x -= 1
+                new_x -= 1
             elif move == "down":
-                x += 1
+                new_x += 1
             elif move == "left":
-                y -= 1
+                new_y -= 1
             elif move == "right":
-                y += 1
+                new_y += 1
 
-            if maze.is_valid_move((x, y)):
+            if maze.is_valid_move((new_x, new_y)):
+                x, y = new_x, new_y
                 path.append((x, y))
             else:
-                break  # Si choca, termina el recorrido
+                continue  # Chocó, pero sigue con el siguiente movimiento
+
+            if (x, y) == maze.end:
+                break  # Ya llegó, no necesita seguir
 
         return path
+

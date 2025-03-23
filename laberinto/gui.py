@@ -5,8 +5,8 @@ import random
 import time
 
 # Definir tamaños
-MAZE_SIZE = 5  # El tamaño del laberinto en filas y columnas
-CELL_SIZE = 60  # Tamaño de cada celda en píxeles
+MAZE_SIZE = 10  # El tamaño del laberinto en filas y columnas
+CELL_SIZE = 40  # Tamaño de cada celda en píxeles
 
 # Colores
 WALL_COLOR = 'black'
@@ -55,31 +55,32 @@ def show_best_path(maze, path):
 # Función para ejecutar el algoritmo genético y visualizar el progreso
 def run_genetic_algorithm():
     maze = Maze()
-    ga = GeneticAlgorithm(maze, population_size=100, chromosome_length=50, mutation_rate=0.05)
+    ga = GeneticAlgorithm(maze, population_size=100, chromosome_length=150, mutation_rate=0.05)
     
     generations = 100
     for gen in range(generations):
         ga.create_next_generation()
         best_agent = ga.get_best_agent()
         best_path = best_agent.move(maze)
+
+        # ✅ Aquí pones la condición para detener si llegó al final
+        if best_path[-1] == maze.end:
+            print("¡Se encontró un camino que llega al final!")
+            break
         
-        # Actualizar el laberinto con el mejor camino hasta el momento
+        # Actualizar visualmente
         show_best_path(maze, best_path)
-        
-        # Actualizar el texto de generación y fitness
         generation_label.config(text=f"Generación {gen + 1}: Mejor fitness = {best_agent.fitness:.4f}")
-        
-        # Actualizar la ventana
         root.update()
-        time.sleep(0.1)  # Pausar brevemente para ver el progreso
-    
+        time.sleep(0.1)
+
+    # Mostrar el mejor camino al final
     best_agent = ga.get_best_agent()
     best_path = best_agent.move(maze)
-    
-    # Mostrar el mejor camino encontrado
     show_best_path(maze, best_path)
     print(f"\nMejor camino encontrado después de {generations} generaciones:")
     print_path(maze, best_path)
+
 
 # Función para imprimir el camino en la consola
 def print_path(maze, path):
