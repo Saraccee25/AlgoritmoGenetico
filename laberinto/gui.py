@@ -23,6 +23,7 @@ canvas.pack()
 
 # Función para dibujar el laberinto
 def draw_maze(maze, path=[]):
+    canvas.delete("all")
     # Dibujar el laberinto
     for x in range(MAZE_SIZE):
         for y in range(MAZE_SIZE):
