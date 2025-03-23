@@ -15,8 +15,14 @@ class GeneticAlgorithm:
         for agent in self.population:
             path = agent.move(self.maze)
             last_pos = path[-1]
-            # Usamos distancia euclidiana a la meta como medida de fitness (cuanto menor, mejor)
+
+        if last_pos == self.maze.end:
+            # Caminos que llegan al final => recompensa extra + penalización por longitud
+            agent.fitness = 100 + 1 / len(path)
+        else:
+            # Caminos que no llegan => usar distancia euclidiana
             agent.fitness = 1 / (dist(last_pos, self.maze.end) + 1)
+
 
     def select_parents(self):
         # Selección por torneo
